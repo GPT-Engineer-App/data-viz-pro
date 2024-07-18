@@ -1,25 +1,43 @@
 import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import FilePreview from "@/components/FilePreview";
+import { Table } from "@/components/ui/table";
 
 const ImportPage = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewData, setPreviewData] = useState(null);
 
-  const handleFileSelect = (file) => {
-    setSelectedFile(file);
+  // This function would be called when a file is successfully uploaded
+  const handleFileUpload = (data) => {
+    // Process the data and set the preview
+    setPreviewData(data);
   };
 
   return (
-    <div className="flex h-full">
-      <Sidebar onFileSelect={handleFileSelect} />
-      <div className="flex-1 p-6">
-        <h1 className="text-2xl font-bold mb-4">Data Import</h1>
-        {selectedFile ? (
-          <FilePreview file={selectedFile} />
-        ) : (
-          <p>Select a file from the sidebar to preview and edit its content.</p>
-        )}
-      </div>
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Data Import</h1>
+      {previewData ? (
+        <div>
+          <h2 className="text-xl font-semibold mb-2">Data Preview</h2>
+          <Table>
+            <Table.Header>
+              <Table.Row>
+                {Object.keys(previewData[0]).map((header) => (
+                  <Table.Head key={header}>{header}</Table.Head>
+                ))}
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {previewData.slice(0, 5).map((row, index) => (
+                <Table.Row key={index}>
+                  {Object.values(row).map((value, cellIndex) => (
+                    <Table.Cell key={cellIndex}>{value}</Table.Cell>
+                  ))}
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        </div>
+      ) : (
+        <p>Upload a file to see a preview of your data.</p>
+      )}
     </div>
   );
 };
