@@ -2,11 +2,11 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload, X } from "lucide-react";
+import { Upload, X, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const Sidebar = () => {
+const Sidebar = ({ onFileSelect }) => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const inputRef = useRef(null);
@@ -38,7 +38,10 @@ const Sidebar = () => {
   };
 
   const handleFiles = (files) => {
-    const newFiles = Array.from(files).map(file => file.name);
+    const newFiles = Array.from(files).map(file => ({
+      name: file.name,
+      content: file
+    }));
     setUploadedFiles(prevFiles => [...prevFiles, ...newFiles]);
     toast.success(`${files.length} file(s) uploaded successfully`);
   };
@@ -48,7 +51,7 @@ const Sidebar = () => {
   };
 
   const removeFile = (fileName) => {
-    setUploadedFiles(prevFiles => prevFiles.filter(file => file !== fileName));
+    setUploadedFiles(prevFiles => prevFiles.filter(file => file.name !== fileName));
     toast.success(`File "${fileName}" removed`);
   };
 
@@ -94,16 +97,26 @@ const Sidebar = () => {
           <h3 className="text-sm font-semibold mb-2">Uploaded Files:</h3>
           <ScrollArea className="h-[200px] w-full rounded-md border">
             <div className="p-4">
-              {uploadedFiles.map((fileName, index) => (
+              {uploadedFiles.map((file, index) => (
                 <div key={index} className="flex justify-between items-center mb-2">
-                  <span className="text-sm truncate mr-2">{fileName}</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => removeFile(fileName)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+                  <span className="text-sm truncate mr-2">{file.name}</span>
+                  <div className="flex items-center">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => onFileSelect(file)}
+                      className="mr-1"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeFile(file.name)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
