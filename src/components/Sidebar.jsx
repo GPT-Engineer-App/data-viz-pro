@@ -2,11 +2,13 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import { toast } from "sonner";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Sidebar = () => {
   const [dragActive, setDragActive] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const inputRef = useRef(null);
 
   const handleDrag = (e) => {
@@ -36,21 +38,25 @@ const Sidebar = () => {
   };
 
   const handleFiles = (files) => {
-    // Handle file upload
-    console.log("Files selected:", files);
-    toast.success(`File "${files[0].name}" selected successfully`);
-    // Here you would typically start the upload process
+    const newFiles = Array.from(files).map(file => file.name);
+    setUploadedFiles(prevFiles => [...prevFiles, ...newFiles]);
+    toast.success(`${files.length} file(s) uploaded successfully`);
   };
 
   const onButtonClick = () => {
     inputRef.current.click();
   };
 
+  const removeFile = (fileName) => {
+    setUploadedFiles(prevFiles => prevFiles.filter(file => file !== fileName));
+    toast.success(`File "${fileName}" removed`);
+  };
+
   return (
-    <div className="w-64 border-r bg-background p-6">
+    <div className="w-64 border-r bg-background p-6 flex flex-col h-full">
       <h2 className="text-lg font-semibold mb-4">Data Import</h2>
       <div
-        className={`border-2 border-dashed rounded-lg p-6 text-center ${
+        className={`border-2 border-dashed rounded-lg p-6 text-center mb-4 ${
           dragActive ? "border-primary" : "border-muted-foreground"
         }`}
         onDragEnter={handleDrag}
@@ -72,6 +78,7 @@ const Sidebar = () => {
           className="hidden"
           onChange={handleChange}
           accept=".csv,.xml,.json,.parquet"
+          multiple
         />
         <Button
           variant="secondary"
@@ -81,6 +88,28 @@ const Sidebar = () => {
           Select File
         </Button>
       </div>
+      
+      {uploadedFiles.length > 0 && (
+        <div className="mt-4">
+          <h3 className="text-sm font-semibold mb-2">Uploaded Files:</h3>
+          <ScrollArea className="h-[200px] w-full rounded-md border">
+            <div className="p-4">
+              {uploadedFiles.map((fileName, index) => (
+                <div key={index} className="flex justify-between items-center mb-2">
+                  <span className="text-sm truncate mr-2">{fileName}</span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => removeFile(fileName)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+      )}
     </div>
   );
 };
