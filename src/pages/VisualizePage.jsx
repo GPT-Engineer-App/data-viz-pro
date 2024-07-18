@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { BarChart, LineChart, PieChart, ScatterChart, AreaChart, BubbleChart, RadarChart, PolarAreaChart, DoughnutChart } from 'lucide-react';
+import { BarChart, LineChart, PieChart, ScatterPlot, AreaChart, CircleDot, RadarChart, PolarArea, Doughnut } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataMappingDnD from '@/components/DataMappingDnD';
 import ChartRenderer from '@/components/ChartRenderer';
@@ -21,12 +21,12 @@ const VisualizePage = () => {
     { value: 'bar', label: 'Bar Chart', icon: BarChart },
     { value: 'line', label: 'Line Chart', icon: LineChart },
     { value: 'pie', label: 'Pie Chart', icon: PieChart },
-    { value: 'scatter', label: 'Scatter Plot', icon: ScatterChart },
+    { value: 'scatter', label: 'Scatter Plot', icon: ScatterPlot },
     { value: 'area', label: 'Area Chart', icon: AreaChart },
-    { value: 'bubble', label: 'Bubble Chart', icon: BubbleChart },
+    { value: 'bubble', label: 'Bubble Chart', icon: CircleDot },
     { value: 'radar', label: 'Radar Chart', icon: RadarChart },
-    { value: 'polarArea', label: 'Polar Area Chart', icon: PolarAreaChart },
-    { value: 'doughnut', label: 'Doughnut Chart', icon: DoughnutChart },
+    { value: 'polarArea', label: 'Polar Area Chart', icon: PolarArea },
+    { value: 'doughnut', label: 'Doughnut Chart', icon: Doughnut },
   ];
 
   const colorPalettes = [
