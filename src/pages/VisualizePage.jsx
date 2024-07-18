@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { BarChart, LineChart, PieChart, ScatterPlot } from 'lucide-react';
+import DataMappingDnD from '@/components/DataMappingDnD';
 
 const VisualizePage = () => {
   const [chartType, setChartType] = useState('bar');
@@ -25,6 +26,10 @@ const VisualizePage = () => {
     { value: 'vibrant', label: 'Vibrant' },
     { value: 'monochrome', label: 'Monochrome' },
   ];
+
+  // Sample data for the DataMappingDnD component
+  const availableColumns = ['Column A', 'Column B', 'Column C', 'Column D', 'Column E'];
+  const chartProperties = ['X-Axis', 'Y-Axis', 'Color', 'Size'];
 
   return (
     <div className="p-6">
@@ -101,25 +106,7 @@ const VisualizePage = () => {
         <h2 className="text-lg font-semibold mb-4">Data Mapping</h2>
         <div className="border rounded-lg p-4">
           <p className="text-muted-foreground mb-4">Drag and drop data columns to map them to chart properties</p>
-          {/* Placeholder for drag-and-drop interface */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="border rounded p-2">
-              <h3 className="font-medium mb-2">Available Columns</h3>
-              <ul className="space-y-2">
-                <li className="bg-muted p-2 rounded cursor-move">Column A</li>
-                <li className="bg-muted p-2 rounded cursor-move">Column B</li>
-                <li className="bg-muted p-2 rounded cursor-move">Column C</li>
-              </ul>
-            </div>
-            <div className="border rounded p-2">
-              <h3 className="font-medium mb-2">Chart Properties</h3>
-              <ul className="space-y-2">
-                <li className="bg-muted p-2 rounded">X-Axis</li>
-                <li className="bg-muted p-2 rounded">Y-Axis</li>
-                <li className="bg-muted p-2 rounded">Color</li>
-              </ul>
-            </div>
-          </div>
+          <DataMappingDnD availableColumns={availableColumns} chartProperties={chartProperties} />
         </div>
       </div>
 
