@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { BarChart, LineChart, PieChart, ScatterPlot } from 'lucide-react';
 import DataMappingDnD from '@/components/DataMappingDnD';
+import ChartRenderer from '@/components/ChartRenderer';
 
 const VisualizePage = () => {
   const [chartType, setChartType] = useState('bar');
@@ -30,6 +31,36 @@ const VisualizePage = () => {
   // Sample data for the DataMappingDnD component
   const availableColumns = ['Column A', 'Column B', 'Column C', 'Column D', 'Column E'];
   const chartProperties = ['X-Axis', 'Y-Axis', 'Color', 'Size'];
+
+  // Sample data for chart rendering
+  const chartData = useMemo(() => ({
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Sample Data',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  }), []);
+
+  const chartOptions = useMemo(() => ({
+    responsive: true,
+    plugins: {
+      legend: {
+        display: showLegend,
+      },
+      title: {
+        display: true,
+        text: 'Sample Chart',
+        font: {
+          size: fontSize,
+        },
+      },
+    },
+  }), [showLegend, fontSize]);
 
   return (
     <div className="p-6">
@@ -97,7 +128,7 @@ const VisualizePage = () => {
         <div className="border rounded-lg p-4">
           <h2 className="text-lg font-semibold mb-4">Chart Preview</h2>
           <div className="aspect-video bg-muted flex items-center justify-center">
-            <p className="text-muted-foreground">Chart preview will be displayed here</p>
+            <ChartRenderer chartType={chartType} data={chartData} options={chartOptions} />
           </div>
         </div>
       </div>
