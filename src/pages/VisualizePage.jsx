@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { BarChart, LineChart, PieChart, ScatterPlot } from 'lucide-react';
+import { BarChart, LineChart, PieChart, ScatterChart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataMappingDnD from '@/components/DataMappingDnD';
 import ChartRenderer from '@/components/ChartRenderer';
@@ -21,7 +21,7 @@ const VisualizePage = () => {
     { value: 'bar', label: 'Bar Chart', icon: BarChart },
     { value: 'line', label: 'Line Chart', icon: LineChart },
     { value: 'pie', label: 'Pie Chart', icon: PieChart },
-    { value: 'scatter', label: 'Scatter Plot', icon: ScatterPlot },
+    { value: 'scatter', label: 'Scatter Plot', icon: ScatterChart },
   ];
 
   const colorPalettes = [
