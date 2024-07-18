@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
+import { toast } from "sonner";
 
 const Sidebar = () => {
   const [dragActive, setDragActive] = useState(false);
+  const inputRef = useRef(null);
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -22,17 +24,26 @@ const Sidebar = () => {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // Handle file upload
-      console.log("File dropped:", e.dataTransfer.files[0]);
+      handleFiles(e.dataTransfer.files);
     }
   };
 
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      // Handle file upload
-      console.log("File selected:", e.target.files[0]);
+      handleFiles(e.target.files);
     }
+  };
+
+  const handleFiles = (files) => {
+    // Handle file upload
+    console.log("Files selected:", files);
+    toast.success(`File "${files[0].name}" selected successfully`);
+    // Here you would typically start the upload process
+  };
+
+  const onButtonClick = () => {
+    inputRef.current.click();
   };
 
   return (
@@ -56,6 +67,7 @@ const Sidebar = () => {
         </Label>
         <Input
           id="file-upload"
+          ref={inputRef}
           type="file"
           className="hidden"
           onChange={handleChange}
@@ -64,7 +76,7 @@ const Sidebar = () => {
         <Button
           variant="secondary"
           className="mt-4"
-          onClick={() => document.getElementById("file-upload").click()}
+          onClick={onButtonClick}
         >
           Select File
         </Button>
