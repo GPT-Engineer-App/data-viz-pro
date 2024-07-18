@@ -1,14 +1,25 @@
-import { Home } from "lucide-react";
-import Index from "./pages/Index.jsx";
+import { Home, BarChart2, PieChart } from "lucide-react";
+import ImportPage from "./pages/ImportPage";
+import VisualizePage from "./pages/VisualizePage";
+import DashboardPage from "./pages/DashboardPage";
 
-/**
- * Central place for defining the navigation items. Used for navigation components and routing.
- */
 export const navItems = [
   {
-    title: "Home",
+    title: "Import",
     to: "/",
     icon: <Home className="h-4 w-4" />,
-    page: <Index />,
+    page: <ImportPage />,
+  },
+  {
+    title: "Visualize",
+    to: "/visualize",
+    icon: <BarChart2 className="h-4 w-4" />,
+    page: <VisualizePage />,
+  },
+  {
+    title: "Dashboard",
+    to: "/dashboard",
+    icon: <PieChart className="h-4 w-4" />,
+    page: <DashboardPage />,
   },
 ];
