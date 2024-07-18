@@ -5,10 +5,12 @@ import { Label } from "@/components/ui/label";
 import { Upload, X, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Checkbox } from "@/components/ui/checkbox";
 
-const Sidebar = ({ onFileSelect }) => {
+const Sidebar = ({ onFileSelect, onActiveFileChange }) => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [activeFile, setActiveFile] = useState(null);
   const inputRef = useRef(null);
 
   const handleDrag = (e) => {
@@ -52,7 +54,16 @@ const Sidebar = ({ onFileSelect }) => {
 
   const removeFile = (fileName) => {
     setUploadedFiles(prevFiles => prevFiles.filter(file => file.name !== fileName));
+    if (activeFile && activeFile.name === fileName) {
+      setActiveFile(null);
+      onActiveFileChange(null);
+    }
     toast.success(`File "${fileName}" removed`);
+  };
+
+  const handleActiveFileChange = (file) => {
+    setActiveFile(file);
+    onActiveFileChange(file);
   };
 
   return (
@@ -98,8 +109,18 @@ const Sidebar = ({ onFileSelect }) => {
           <ScrollArea className="h-[200px] w-full rounded-md border">
             <div className="p-4">
               {uploadedFiles.map((file, index) => (
-                <div key={index} className="flex justify-between items-center mb-2">
-                  <span className="text-sm truncate mr-2">{file.name}</span>
+                <div key={index} className="flex items-center mb-2">
+                  <Checkbox
+                    id={`file-${index}`}
+                    checked={activeFile && activeFile.name === file.name}
+                    onCheckedChange={() => handleActiveFileChange(file)}
+                  />
+                  <label
+                    htmlFor={`file-${index}`}
+                    className="text-sm truncate ml-2 flex-grow"
+                  >
+                    {file.name}
+                  </label>
                   <div className="flex items-center">
                     <Button
                       variant="ghost"

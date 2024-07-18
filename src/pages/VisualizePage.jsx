@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { BarChart, LineChart, PieChart, ScatterChart } from 'lucide-react';
+import { BarChart, LineChart, PieChart, ScatterChart, AreaChart, BubbleChart, RadarChart, PolarAreaChart, DoughnutChart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataMappingDnD from '@/components/DataMappingDnD';
 import ChartRenderer from '@/components/ChartRenderer';
@@ -22,6 +22,11 @@ const VisualizePage = () => {
     { value: 'line', label: 'Line Chart', icon: LineChart },
     { value: 'pie', label: 'Pie Chart', icon: PieChart },
     { value: 'scatter', label: 'Scatter Plot', icon: ScatterChart },
+    { value: 'area', label: 'Area Chart', icon: AreaChart },
+    { value: 'bubble', label: 'Bubble Chart', icon: BubbleChart },
+    { value: 'radar', label: 'Radar Chart', icon: RadarChart },
+    { value: 'polarArea', label: 'Polar Area Chart', icon: PolarAreaChart },
+    { value: 'doughnut', label: 'Doughnut Chart', icon: DoughnutChart },
   ];
 
   const colorPalettes = [
@@ -29,6 +34,22 @@ const VisualizePage = () => {
     { value: 'pastel', label: 'Pastel' },
     { value: 'vibrant', label: 'Vibrant' },
     { value: 'monochrome', label: 'Monochrome' },
+    { value: 'neonBlue', label: 'Neon Blue' },
+    { value: 'neonGreen', label: 'Neon Green' },
+    { value: 'neonPink', label: 'Neon Pink' },
+    { value: 'neonOrange', label: 'Neon Orange' },
+    { value: 'neonPurple', label: 'Neon Purple' },
+    { value: 'neonYellow', label: 'Neon Yellow' },
+    { value: 'neonRed', label: 'Neon Red' },
+    { value: 'neonCyan', label: 'Neon Cyan' },
+    { value: 'neonMagenta', label: 'Neon Magenta' },
+    { value: 'neonLime', label: 'Neon Lime' },
+    { value: 'neonTeal', label: 'Neon Teal' },
+    { value: 'neonIndigo', label: 'Neon Indigo' },
+    { value: 'neonViolet', label: 'Neon Violet' },
+    { value: 'neonFuchsia', label: 'Neon Fuchsia' },
+    { value: 'neonAqua', label: 'Neon Aqua' },
+    { value: 'neonChartreuse', label: 'Neon Chartreuse' },
   ];
 
   // Sample data for the DataMappingDnD component
